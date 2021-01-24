@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using FluentValidationKata.Domain.Validation;
+using System;
+using System.Collections.Generic;
 
 namespace FluentValidationKata.Domain
 {
     /// <summary>
     /// The product.
     /// </summary>
-    public class Product
+    public class Product : ICanValidate
     {
         /// <summary>
         /// Gets or sets the language.
@@ -55,6 +59,11 @@ namespace FluentValidationKata.Domain
         /// <summary>
         /// Gets or sets the product attributes.
         /// </summary>
-        public IEnumerable<ProductAttribute> Attributes { get; set; } 
+        public IEnumerable<ProductAttribute> Attributes { get; set; }
+
+        public ValidationResult Validate()
+        {
+            return new ProductValidator().Validate(this);
+        }
     }
 }
